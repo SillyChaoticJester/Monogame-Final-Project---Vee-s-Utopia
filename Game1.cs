@@ -25,6 +25,18 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         //Music and Sounds
         //Fonts
 
+        Texture2D titleTexture;
+        Texture2D titleBackground;
+
+        Rectangle titleRect;
+
+        SpriteFont textFont;
+        SpriteFont bigTextFont;
+
+        Screens screens;
+        KeyboardState keyboardState;
+        MouseState mouseState;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -35,6 +47,12 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            Window.Title = "Vee's Utopia - A Dandy's World AU Fan-Game";
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 500;
+            _graphics.ApplyChanges();
+
+            titleRect = new Rectangle(100, 10, 300, 275);
 
             base.Initialize();
         }
@@ -44,6 +62,12 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            textFont = Content.Load<SpriteFont>("Fonts/textFont");
+            bigTextFont = Content.Load<SpriteFont>("Fonts/bigTextFont");
+
+            titleTexture = Content.Load<Texture2D>("Images/vu_logo");
+            titleBackground = Content.Load<Texture2D>("Images/vu_title_background");
         }
 
         protected override void Update(GameTime gameTime)
@@ -52,15 +76,61 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 Exit();
 
             // TODO: Add your update logic here
+            screens = Screens.Warning;
+            keyboardState = Keyboard.GetState();
+            mouseState = Mouse.GetState();
+
+            if (screens == Screens.Warning)
+            {
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    screens = Screens.Title;
+                }
+            }
+            else if (screens == Screens.Title)
+            {
+
+            }
+            else if (screens == Screens.Lore)
+            {
+
+            }
+            else if (screens == Screens.Office)
+            {
+
+            }
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            if (screens == Screens.Warning)
+            {
+                _spriteBatch.DrawString(bigTextFont, "!-Warning-!", new Vector2(240, 5), Color.White);
+                _spriteBatch.DrawString(textFont, "This game might contain Flashing Lights,\n      Jumpscares, and Shaking Screens", new Vector2(120, 130), Color.White);
+                _spriteBatch.DrawString(textFont, "This is an AU and NOT related to Canon Dandy's \n                                    World Lore", new Vector2(40, 215), Color.White);
+                _spriteBatch.DrawString(textFont, "This is a simple Click-to-Interact game, expect most \n                            gameplay to be clicking.", new Vector2(15, 295), Color.White);
+                _spriteBatch.DrawString(textFont, "Click to Continue", new Vector2(280, 450), Color.White);
+            }
+            else if (screens == Screens.Title)
+            {
+                _spriteBatch.Draw(titleBackground, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
+                _spriteBatch.Draw(titleTexture, titleRect, Color.White);
+            }
+            else if (screens == Screens.Lore)
+            {
+
+            }
+            else
+            {
+
+            }
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
