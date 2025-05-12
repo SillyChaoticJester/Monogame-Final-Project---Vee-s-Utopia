@@ -52,7 +52,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            titleRect = new Rectangle(100, 10, 300, 275);
+            screens = Screens.Warning;
+            titleRect = new Rectangle(220, 10, 395, 200);
 
             base.Initialize();
         }
@@ -66,7 +67,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             textFont = Content.Load<SpriteFont>("Fonts/textFont");
             bigTextFont = Content.Load<SpriteFont>("Fonts/bigTextFont");
 
-            titleTexture = Content.Load<Texture2D>("Images/vu_logo");
+            titleTexture = Content.Load<Texture2D>("Images/vu_logo_2");
             titleBackground = Content.Load<Texture2D>("Images/vu_title_background");
         }
 
@@ -76,7 +77,6 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 Exit();
 
             // TODO: Add your update logic here
-            screens = Screens.Warning;
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
@@ -89,7 +89,10 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             }
             else if (screens == Screens.Title)
             {
-
+                if (keyboardState.IsKeyDown(Keys.Enter))
+                {
+                    screens = Screens.Lore;
+                }
             }
             else if (screens == Screens.Lore)
             {
@@ -119,12 +122,15 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             }
             else if (screens == Screens.Title)
             {
-                _spriteBatch.Draw(titleBackground, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
+                _spriteBatch.Draw(titleBackground, new Rectangle(-5, 0, 810, 505), Color.White);
                 _spriteBatch.Draw(titleTexture, titleRect, Color.White);
+                _spriteBatch.DrawString(textFont, "Press Enter to Start", new Vector2(250, 430), Color.Black);
             }
             else if (screens == Screens.Lore)
             {
-
+                _spriteBatch.DrawString(bigTextFont, "Story", new Vector2(320, 5), Color.White);
+                _spriteBatch.DrawString(textFont,"Ever since Vee locked Dandy away and took over as \n  the Main Star of Gardenview, things have changed.\n    Gardenview has taken a more futuristic design,\n now called 'Cyberview', and Toons have been living\n  worry-free from the lingering threat of Ichor. Vee\n  calls it an utopia for all Toons and Machines alike.\n Everyone agrees. However, with the disappearance\n                  of Astro, suspicion has been rising.", new Vector2(4, 90), Color.White);
+                _spriteBatch.DrawString(textFont, "Right Click to Continue", new Vector2(225, 450), Color.White);
             }
             else
             {

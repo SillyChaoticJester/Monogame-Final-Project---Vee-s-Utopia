@@ -30,7 +30,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/textFont.spritefont
 
-#begin Images/vu_logo.png
+#begin Images/vu_logo_2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -40,7 +40,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/vu_logo.png
+/build:Images/vu_logo_2.png
 
 #begin Images/vu_title_background.png
 /importer:TextureImporter
