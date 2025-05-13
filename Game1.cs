@@ -9,6 +9,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Warning,
         Title,
         Lore,
+        Lore2,
         Office
     }
     public class Game1 : Game
@@ -96,7 +97,17 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             }
             else if (screens == Screens.Lore)
             {
-
+                if (mouseState.RightButton == ButtonState.Pressed)
+                {
+                    screens = Screens.Lore2;
+                }
+            }
+            else if (screens == Screens.Lore2)
+            {
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    screens = Screens.Office;
+                }
             }
             else if (screens == Screens.Office)
             {
@@ -117,7 +128,6 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 _spriteBatch.DrawString(bigTextFont, "!-Warning-!", new Vector2(240, 5), Color.White);
                 _spriteBatch.DrawString(textFont, "This game might contain Flashing Lights,\n      Jumpscares, and Shaking Screens", new Vector2(120, 130), Color.White);
                 _spriteBatch.DrawString(textFont, "This is an AU and NOT related to Canon Dandy's \n                                    World Lore", new Vector2(40, 215), Color.White);
-                _spriteBatch.DrawString(textFont, "This is a simple Click-to-Interact game, expect most \n                            gameplay to be clicking.", new Vector2(15, 295), Color.White);
                 _spriteBatch.DrawString(textFont, "Click to Continue", new Vector2(280, 450), Color.White);
             }
             else if (screens == Screens.Title)
@@ -131,6 +141,13 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 _spriteBatch.DrawString(bigTextFont, "Story", new Vector2(320, 5), Color.White);
                 _spriteBatch.DrawString(textFont,"Ever since Vee locked Dandy away and took over as \n  the Main Star of Gardenview, things have changed.\n    Gardenview has taken a more futuristic design,\n now called 'Cyberview', and Toons have been living\n  worry-free from the lingering threat of Ichor. Vee\n  calls it an utopia for all Toons and Machines alike.\n Everyone agrees. However, with the disappearance\n                  of Astro, suspicion has been rising.", new Vector2(4, 90), Color.White);
                 _spriteBatch.DrawString(textFont, "Right Click to Continue", new Vector2(225, 450), Color.White);
+            }
+            else if (screens == Screens.Lore2)
+            {
+                _spriteBatch.DrawString(bigTextFont, "Story (Continued)", new Vector2(150, 5), Color.White);
+                _spriteBatch.DrawString(textFont, "   You play as Rodger, the head detective and police\n   chief of Cyberview. Your job is to make sure that\n  rules are followed, danger is prevented, and peace\n                                         is restored.", new Vector2(4, 120), Color.White);
+                _spriteBatch.DrawString(textFont, "To interact with objects or Toons, left click on them.", new Vector2(4, 300), Color.White);
+                _spriteBatch.DrawString(textFont, "Left Click to Continue", new Vector2(225, 450), Color.White);
             }
             else
             {
