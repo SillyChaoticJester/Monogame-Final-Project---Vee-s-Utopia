@@ -28,8 +28,23 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
         Texture2D titleTexture;
         Texture2D titleBackground;
+        Texture2D rodOfficeBackground;
+        Texture2D doorTexture;
+        Texture2D magGlassTexture;
+        Texture2D pictureTexture;
+        Texture2D portraitTexture;
+        Texture2D rackTexture;
+        Texture2D rackClothesTexture;
+        Texture2D rodDeskTexture;
 
         Rectangle titleRect;
+        Rectangle doorRect;
+        Rectangle magGlassRect;
+        Rectangle pictureRect;
+        Rectangle rodDeskRect;
+        Rectangle portraitRect;
+        Rectangle rackRect;
+        Rectangle rackCRect;
 
         SpriteFont textFont;
         SpriteFont bigTextFont;
@@ -53,8 +68,15 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            screens = Screens.Warning;
+            screens = Screens.Office;
             titleRect = new Rectangle(220, 10, 395, 200);
+            doorRect = new Rectangle(580, 92, 160, 290);
+            magGlassRect = new Rectangle(100, 100, 100, 100);
+            pictureRect = new Rectangle(445, 200, 70, 70);
+            rodDeskRect = new Rectangle(210, 250, 350, 220);
+            portraitRect = new Rectangle(220, 40, 350, 420);
+            rackRect = new Rectangle(100, 110, 60, 180);
+            rackCRect = new Rectangle(100, 100, 100, 190);
 
             base.Initialize();
         }
@@ -70,6 +92,15 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
             titleTexture = Content.Load<Texture2D>("Images/vu_logo_2");
             titleBackground = Content.Load<Texture2D>("Images/vu_title_background");
+            rodOfficeBackground = Content.Load<Texture2D>("Images/rod_office");
+
+            doorTexture = Content.Load<Texture2D>("Images/door");
+            magGlassTexture = Content.Load<Texture2D>("Images/mag_glass");
+            pictureTexture = Content.Load<Texture2D>("Images/picture");
+            portraitTexture = Content.Load<Texture2D>("Images/portrait");
+            rackTexture = Content.Load<Texture2D>("Images/rack");
+            rackClothesTexture = Content.Load<Texture2D>("Images/rack_clothes");
+            rodDeskTexture = Content.Load<Texture2D>("Images/rod_desk");
         }
 
         protected override void Update(GameTime gameTime)
@@ -148,6 +179,17 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 _spriteBatch.DrawString(textFont, "   You play as Rodger, the head detective and police\n   chief of Cyberview. Your job is to make sure that\n  rules are followed, danger is prevented, and peace\n                                         is restored.", new Vector2(4, 120), Color.White);
                 _spriteBatch.DrawString(textFont, "To interact with objects or Toons, left click on them.", new Vector2(4, 300), Color.White);
                 _spriteBatch.DrawString(textFont, "Left Click to Continue", new Vector2(225, 450), Color.White);
+            }
+            else if (screens == Screens.Office) 
+            {
+                _spriteBatch.Draw(rodOfficeBackground, new Rectangle(-5, 0, 810, 505), Color.White);
+                _spriteBatch.Draw(doorTexture, doorRect, Color.White);
+                _spriteBatch.Draw(rodDeskTexture, rodDeskRect, Color.White);
+                _spriteBatch.Draw(pictureTexture, pictureRect, Color.White);
+                //_spriteBatch.Draw(portraitTexture, portraitRect, Color.White);
+                _spriteBatch.Draw(rackTexture, rackRect, Color.White);
+                _spriteBatch.Draw(rackClothesTexture, rackCRect, Color.White);
+
             }
             else
             {
