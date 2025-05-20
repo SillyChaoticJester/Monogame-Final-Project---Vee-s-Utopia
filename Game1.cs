@@ -10,7 +10,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Title,
         Lore,
         Lore2,
-        Office
+        Office,
+        LivingRoom
     }
     public class Game1 : Game
     {
@@ -75,8 +76,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             pictureRect = new Rectangle(445, 200, 70, 70);
             rodDeskRect = new Rectangle(210, 250, 350, 220);
             portraitRect = new Rectangle(220, 40, 350, 420);
-            rackRect = new Rectangle(100, 110, 60, 180);
-            rackCRect = new Rectangle(100, 100, 100, 190);
+            rackRect = new Rectangle(474, 138, 100, 268);
+            rackCRect = new Rectangle(450, 115, 170, 290);
 
             base.Initialize();
         }
@@ -144,6 +145,10 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             {
 
             }
+            else if (screens == Screens.LivingRoom)
+            {
+
+            }
 
             base.Update(gameTime);
         }
@@ -187,9 +192,11 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 _spriteBatch.Draw(rodDeskTexture, rodDeskRect, Color.White);
                 _spriteBatch.Draw(pictureTexture, pictureRect, Color.White);
                 //_spriteBatch.Draw(portraitTexture, portraitRect, Color.White);
-                _spriteBatch.Draw(rackTexture, rackRect, Color.White);
-                _spriteBatch.Draw(rackClothesTexture, rackCRect, Color.White);
-
+            }
+            else if (screens == Screens.LivingRoom) 
+            {
+                //_spriteBatch.Draw(rackTexture, rackRect, Color.White);
+                //_spriteBatch.Draw(rackClothesTexture, rackCRect, Color.White);
             }
             else
             {
