@@ -11,7 +11,13 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Lore,
         Lore2,
         Office,
-        LivingRoom
+        LivingRoom,
+        Outside,
+        Kitchen,
+        Elevator,
+        Reception,
+        VeeOffice,
+        CrimeScene
     }
     public class Game1 : Game
     {
@@ -30,6 +36,9 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Texture2D titleTexture;
         Texture2D titleBackground;
         Texture2D rodOfficeBackground;
+        Texture2D outsideBackground;
+        Texture2D elevatorBackground;
+
         Texture2D doorTexture;
         Texture2D magGlassTexture;
         Texture2D pictureTexture;
@@ -94,6 +103,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             titleTexture = Content.Load<Texture2D>("Images/vu_logo_2");
             titleBackground = Content.Load<Texture2D>("Images/vu_title_background");
             rodOfficeBackground = Content.Load<Texture2D>("Images/rod_office");
+            elevatorBackground = Content.Load<Texture2D>("Images/elevator");
+            outsideBackground = Content.Load<Texture2D>("Images/outside");
 
             doorTexture = Content.Load<Texture2D>("Images/door");
             magGlassTexture = Content.Load<Texture2D>("Images/mag_glass");
