@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Monogame_Final_Project___Vee_s_Utopia
 {
@@ -38,6 +39,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Texture2D rodOfficeBackground;
         Texture2D outsideBackground;
         Texture2D elevatorBackground;
+        Texture2D kitchenBackground;
 
         Texture2D doorTexture;
         Texture2D magGlassTexture;
@@ -105,6 +107,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             rodOfficeBackground = Content.Load<Texture2D>("Images/rod_office");
             elevatorBackground = Content.Load<Texture2D>("Images/elevator");
             outsideBackground = Content.Load<Texture2D>("Images/outside");
+            kitchenBackground = Content.Load<Texture2D>("Images/kitchen");
 
             doorTexture = Content.Load<Texture2D>("Images/door");
             magGlassTexture = Content.Load<Texture2D>("Images/mag_glass");
@@ -160,6 +163,22 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             {
 
             }
+            else if (screens == Screens.Outside)
+            {
+
+            }
+            else if (screens == Screens.Kitchen)
+            {
+
+            }
+            else if (screens == Screens.Elevator)
+            {
+
+            }
+            else
+            {
+
+            }
 
             base.Update(gameTime);
         }
@@ -208,6 +227,21 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             {
                 //_spriteBatch.Draw(rackTexture, rackRect, Color.White);
                 //_spriteBatch.Draw(rackClothesTexture, rackCRect, Color.White);
+            }
+            else if (screens == Screens.Outside)
+            {
+                _spriteBatch.Draw(outsideBackground, new Rectangle(-5, 0, 810, 505), Color.White);
+
+            }
+            else if (screens == Screens.Kitchen)
+            {
+                _spriteBatch.Draw(kitchenBackground, new Rectangle(-5, 0, 810, 505), Color.White);
+
+            }
+            else if (screens == Screens.Elevator)
+            {
+                _spriteBatch.Draw(elevatorBackground, new Rectangle(-5, 0, 810, 505), Color.White);
+
             }
             else
             {
