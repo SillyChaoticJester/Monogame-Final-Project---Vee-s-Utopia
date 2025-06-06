@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace Monogame_Final_Project___Vee_s_Utopia
 {
@@ -32,7 +34,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         //See if Classes are Needed
         //Sprites
         //Music and Sounds
-        //Fonts
+
 
         Texture2D titleTexture;
         Texture2D titleBackground;
@@ -49,6 +51,15 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Texture2D rackClothesTexture;
         Texture2D rodDeskTexture;
 
+        List<Texture2D> rodgerTextures;
+        List<Texture2D> veeTextures;
+        List<Texture2D> boxtenTextures;
+        List <Texture2D> cosmoTextures;
+        List<Texture2D> dazzleTextures;
+        List <Texture2D> shrimpoTextures;
+        List <Texture2D> teaganTextures;
+        List <Texture2D> toodlesTextures;
+
         Rectangle titleRect;
         Rectangle doorRect;
         Rectangle magGlassRect;
@@ -60,6 +71,9 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
         SpriteFont textFont;
         SpriteFont bigTextFont;
+
+        SoundEffect titleMusic;
+        SoundEffectInstance titleMusicInstance;
 
         Screens screens;
         KeyboardState keyboardState;
@@ -80,7 +94,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            screens = Screens.Office;
+            screens = Screens.Warning;
             titleRect = new Rectangle(220, 10, 395, 200);
             doorRect = new Rectangle(580, 92, 160, 290);
             magGlassRect = new Rectangle(100, 100, 100, 100);
@@ -116,6 +130,65 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             rackTexture = Content.Load<Texture2D>("Images/rack");
             rackClothesTexture = Content.Load<Texture2D>("Images/rack_clothes");
             rodDeskTexture = Content.Load<Texture2D>("Images/rod_desk");
+
+            titleMusic = Content.Load<SoundEffect>("Sounds-Music/vu_title_music");
+            titleMusicInstance = titleMusic.CreateInstance();
+            titleMusicInstance.IsLooped = true;
+
+            //Rodger
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Idle"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk_2"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Idle"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk2"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk3"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Shook"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Think"));
+            
+            //Vee
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Idle"));
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Talk"));
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Talk2"));
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Weary"));
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_WearyTalk"));
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Mad"));
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Annoyed"));
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_AnnoyedTalk"));
+
+            //Boxten
+            boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Idle"));
+            boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Idle2"));
+            boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Talk"));
+            boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Talk2"));
+            boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Talk3"));
+
+            //Cosmo
+            cosmoTextures.Add(Content.Load<Texture2D>("Cosmo/C_Idle"));
+            cosmoTextures.Add(Content.Load<Texture2D>("Cosmo/C_Talk"));
+            cosmoTextures.Add(Content.Load<Texture2D>("Cosmo/C_Talk2"));
+            cosmoTextures.Add(Content.Load<Texture2D>("Cosmo/C_Scared"));
+
+            //Dazzle
+            dazzleTextures.Add(Content.Load<Texture2D>("Dazzle/D_Idle"));
+            dazzleTextures.Add(Content.Load<Texture2D>("Dazzle/D_Talk"));
+            dazzleTextures.Add(Content.Load<Texture2D>("Dazzle/D_Talk2"));
+
+            //Shrimpo
+            shrimpoTextures.Add(Content.Load<Texture2D>("Shrimpo/S_Idle"));
+            shrimpoTextures.Add(Content.Load<Texture2D>("Shrimpo/S_Talk"));
+            shrimpoTextures.Add(Content.Load<Texture2D>("Shrimpo/S_Talk2"));
+
+            //Teagan
+            teaganTextures.Add(Content.Load<Texture2D>("Teagan/Te_Idle"));
+            teaganTextures.Add(Content.Load<Texture2D>("Teagan/Te_Talk"));
+            teaganTextures.Add(Content.Load<Texture2D>("Teagan/Te_Talk2"));
+            teaganTextures.Add(Content.Load<Texture2D>("Teagan/Te_Talk3"));
+            teaganTextures.Add(Content.Load<Texture2D>("Teagan/Te_Sit"));
+
+            //Toodles
+            toodlesTextures.Add(Content.Load<Texture2D>("Toodles/T_Idle"));
+            toodlesTextures.Add(Content.Load<Texture2D>("Toodles/T_Talk"));
         }
 
         protected override void Update(GameTime gameTime)
@@ -136,8 +209,10 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             }
             else if (screens == Screens.Title)
             {
+                titleMusicInstance.Play();
                 if (keyboardState.IsKeyDown(Keys.Enter))
                 {
+                    titleMusicInstance.Stop();
                     screens = Screens.Lore;
                 }
             }
