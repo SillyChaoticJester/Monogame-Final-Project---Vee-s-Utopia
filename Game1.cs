@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Monogame_Final_Project___Vees_Utopia;
 using System;
 using System.Collections.Generic;
 
@@ -75,6 +76,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         SoundEffect titleMusic;
         SoundEffectInstance titleMusicInstance;
 
+        Rodger rodger;
+
         Screens screens;
         KeyboardState keyboardState;
         MouseState mouseState;
@@ -94,7 +97,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            screens = Screens.Warning;
+            screens = Screens.Office;
             titleRect = new Rectangle(220, 10, 395, 200);
             doorRect = new Rectangle(580, 92, 160, 290);
             magGlassRect = new Rectangle(100, 100, 100, 100);
@@ -103,6 +106,17 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             portraitRect = new Rectangle(220, 40, 350, 420);
             rackRect = new Rectangle(474, 138, 100, 268);
             rackCRect = new Rectangle(450, 115, 170, 290);
+
+            rodgerTextures = new List<Texture2D>();
+            veeTextures = new List<Texture2D>();
+            boxtenTextures = new List<Texture2D>();
+            cosmoTextures = new List<Texture2D>();
+            dazzleTextures = new List<Texture2D>();
+            shrimpoTextures = new List<Texture2D>();
+            teaganTextures = new List<Texture2D>();
+            toodlesTextures = new List<Texture2D>();
+
+            rodger = new Rodger(rodgerTextures, new Rectangle(100, 100, 200, 350));
 
             base.Initialize();
         }
@@ -138,7 +152,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             //Rodger
             rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Idle"));
             rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk_2"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk2"));
             rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Idle"));
             rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk"));
             rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk2"));
@@ -159,7 +173,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             //Boxten
             boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Idle"));
             boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Idle2"));
-            boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Talk"));
+            boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Talk1"));
             boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Talk2"));
             boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Talk3"));
 
@@ -296,6 +310,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 _spriteBatch.Draw(doorTexture, doorRect, Color.White);
                 _spriteBatch.Draw(rodDeskTexture, rodDeskRect, Color.White);
                 _spriteBatch.Draw(pictureTexture, pictureRect, Color.White);
+                rodger.Draw(_spriteBatch);
                 //_spriteBatch.Draw(portraitTexture, portraitRect, Color.White);
             }
             else if (screens == Screens.LivingRoom) 
