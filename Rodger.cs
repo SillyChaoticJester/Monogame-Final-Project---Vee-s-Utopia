@@ -15,16 +15,16 @@ namespace Monogame_Final_Project___Vees_Utopia
         private Rectangle _location;
         private int _textureIndex;
 
-        public Rodger(List<Texture2D> textures, Rectangle location)
+        public Rodger(List<Texture2D> textures, Rectangle location, int spriteSwitch)
         {
             _textures = textures;
             _location = location;
-            _textureIndex = 0;
+            _textureIndex = spriteSwitch;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_textures[0], _location, Color.White);
+            spriteBatch.Draw(_textures[_textureIndex], _location, Color.White);
         }
 
         public Rectangle Rect

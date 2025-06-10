@@ -52,6 +52,11 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Texture2D rackClothesTexture;
         Texture2D rodDeskTexture;
 
+        Texture2D rodBoxTexture;
+        Texture2D veeBoxTexture;
+        Texture2D dazBoxTexture;
+        Texture2D tooBoxTexture;
+
         List<Texture2D> rodgerTextures;
         List<Texture2D> veeTextures;
         List<Texture2D> boxtenTextures;
@@ -69,6 +74,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Rectangle portraitRect;
         Rectangle rackRect;
         Rectangle rackCRect;
+        Rectangle textboxRect;
 
         SpriteFont textFont;
         SpriteFont bigTextFont;
@@ -78,9 +84,12 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
         Rodger rodger;
 
+        int sprite = 0;
+        string textbox;
+
         Screens screens;
         KeyboardState keyboardState;
-        MouseState mouseState;
+        MouseState mouseState, prevMouseState;
 
         public Game1()
         {
@@ -106,6 +115,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             portraitRect = new Rectangle(220, 40, 350, 420);
             rackRect = new Rectangle(474, 138, 100, 268);
             rackCRect = new Rectangle(450, 115, 170, 290);
+            textboxRect = new Rectangle(0, 350, 800, 150);
 
             rodgerTextures = new List<Texture2D>();
             veeTextures = new List<Texture2D>();
@@ -116,7 +126,9 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             teaganTextures = new List<Texture2D>();
             toodlesTextures = new List<Texture2D>();
 
-            rodger = new Rodger(rodgerTextures, new Rectangle(100, 100, 200, 350));
+            textbox = "Just another day in Cyberview... Should be another\nuneventful day.";
+
+            rodger = new Rodger(rodgerTextures, new Rectangle(20, 120, 180, 370), sprite);
 
             base.Initialize();
         }
@@ -144,6 +156,11 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             rackTexture = Content.Load<Texture2D>("Images/rack");
             rackClothesTexture = Content.Load<Texture2D>("Images/rack_clothes");
             rodDeskTexture = Content.Load<Texture2D>("Images/rod_desk");
+
+            rodBoxTexture = Content.Load<Texture2D>("Textboxes/rod_textbox");
+            veeBoxTexture = Content.Load<Texture2D>("Textboxes/vee_textbox");
+            dazBoxTexture = Content.Load<Texture2D>("Textboxes/daz_textbox");
+            tooBoxTexture = Content.Load<Texture2D>("Textboxes/too_textbox");
 
             titleMusic = Content.Load<SoundEffect>("Sounds-Music/vu_title_music");
             titleMusicInstance = titleMusic.CreateInstance();
@@ -212,11 +229,12 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
             // TODO: Add your update logic here
             keyboardState = Keyboard.GetState();
+            prevMouseState = mouseState;
             mouseState = Mouse.GetState();
 
             if (screens == Screens.Warning)
             {
-                if (mouseState.LeftButton == ButtonState.Pressed)
+                if (Click())
                 {
                     screens = Screens.Title;
                 }
@@ -232,21 +250,28 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             }
             else if (screens == Screens.Lore)
             {
-                if (mouseState.RightButton == ButtonState.Pressed)
+                if (Click())
                 {
                     screens = Screens.Lore2;
                 }
             }
             else if (screens == Screens.Lore2)
             {
-                if (mouseState.LeftButton == ButtonState.Pressed)
+                if (Click())
                 {
                     screens = Screens.Office;
                 }
             }
             else if (screens == Screens.Office)
             {
-
+                if (Click())
+                {
+                    textbox = "However, I still have that interview with Vee in a \ncouple of hours...";
+                }
+                //if (Click())
+                //{
+                //    textbox = "I should get myself ready to head towards Vee's \nOffice floor.";
+                //}
             }
             else if (screens == Screens.LivingRoom)
             {
@@ -311,6 +336,9 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 _spriteBatch.Draw(rodDeskTexture, rodDeskRect, Color.White);
                 _spriteBatch.Draw(pictureTexture, pictureRect, Color.White);
                 rodger.Draw(_spriteBatch);
+                _spriteBatch.Draw(rodBoxTexture, textboxRect, Color.White);
+                _spriteBatch.DrawString(textFont, textbox, new Vector2(10, 360), Color.Black);
+
                 //_spriteBatch.Draw(portraitTexture, portraitRect, Color.White);
             }
             else if (screens == Screens.LivingRoom) 
@@ -341,5 +369,11 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
             base.Draw(gameTime);
         }
+
+        protected bool Click()
+        {
+            return prevMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed;
+        }
+       
     }
 }
