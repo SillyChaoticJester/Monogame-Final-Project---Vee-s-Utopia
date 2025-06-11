@@ -83,8 +83,18 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         SoundEffectInstance titleMusicInstance;
 
         Rodger rodger;
+        Vee vee;
 
-        int sprite = 0;
+        int rSprite = 0;
+        int vSprite = 0;
+        int textboxCount = 0;
+
+        bool isSpeaking = false;
+        bool isVSpeaking = false;
+        bool lookGlass = false;
+        bool lookPortrait = false;
+        bool haveGlass = false;
+
         string textbox;
 
         Screens screens;
@@ -106,13 +116,13 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            screens = Screens.Office;
+            screens = Screens.VeeOffice;
             titleRect = new Rectangle(220, 10, 395, 200);
             doorRect = new Rectangle(580, 92, 160, 290);
-            magGlassRect = new Rectangle(100, 100, 100, 100);
+            magGlassRect = new Rectangle(250, 20, 300, 330);
             pictureRect = new Rectangle(445, 200, 70, 70);
             rodDeskRect = new Rectangle(210, 250, 350, 220);
-            portraitRect = new Rectangle(220, 40, 350, 420);
+            portraitRect = new Rectangle(220, 20, 350, 420);
             rackRect = new Rectangle(474, 138, 100, 268);
             rackCRect = new Rectangle(450, 115, 170, 290);
             textboxRect = new Rectangle(0, 350, 800, 150);
@@ -128,7 +138,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
             textbox = "Just another day in Cyberview... Should be another\nuneventful day.";
 
-            rodger = new Rodger(rodgerTextures, new Rectangle(20, 120, 180, 370), sprite);
+            rodger = new Rodger(rodgerTextures, new Rectangle(20, 120, 180, 370), rSprite);
+            vee = new Vee(veeTextures, new Rectangle(150, 50, 500, 500), vSprite);
 
             base.Initialize();
         }
@@ -260,38 +271,62 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 if (Click())
                 {
                     screens = Screens.Office;
+                    isSpeaking = true;
+                    rSprite = 0;
                 }
             }
             else if (screens == Screens.Office)
             {
-                if (Click())
+                if (Click() && textboxCount == 0)
                 {
                     textbox = "However, I still have that interview with Vee in a \ncouple of hours...";
+                    textboxCount++;
                 }
-                //if (Click())
-                //{
-                //    textbox = "I should get myself ready to head towards Vee's \nOffice floor.";
-                //}
+                else if (Click() && textboxCount == 1)
+                {
+                    textbox = "I should get myself ready to head towards Vee's \nOffice floor.";
+                    textboxCount++;
+                }
+                else if (Click() && textboxCount == 2)
+                {
+                    isSpeaking = false;
+                    textboxCount = 0;
+                }
+                if (Click() && pictureRect.Contains(mouseState.Position))
+                {
+                    isSpeaking = true;
+                    lookPortrait = true;
+                    rSprite = 2;
+                    textbox = "A portrait of my wonderful family. Oh, how much \nToodles has grown since that day...";
+                    textboxCount++;
+                    if (Click() && textboxCount == 1)
+                    {
+                        isSpeaking = false;
+                        lookPortrait = false;
+                        textboxCount = 0;
+                        rSprite = 0;
+                    }
+                }
+                if (Click() && doorRect.Contains(mouseState.Position) && haveGlass == false)
+                {
+                    isSpeaking = true;
+                    textbox = "Hmm, it feels like I'm missing something... \nBetter check again.";
+                    textboxCount++;
+                    if (Click() && textboxCount == 1)
+                    {
+                        isSpeaking = false;
+                        textboxCount = 0;
+                    }
+                }
+                
             }
             else if (screens == Screens.LivingRoom)
             {
 
             }
-            else if (screens == Screens.Outside)
+            else if (screens == Screens.VeeOffice) 
             {
-
-            }
-            else if (screens == Screens.Kitchen)
-            {
-
-            }
-            else if (screens == Screens.Elevator)
-            {
-
-            }
-            else
-            {
-
+                textbox = "No clue why the sprites aren't working...";
             }
 
             base.Update(gameTime);
@@ -335,35 +370,32 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 _spriteBatch.Draw(doorTexture, doorRect, Color.White);
                 _spriteBatch.Draw(rodDeskTexture, rodDeskRect, Color.White);
                 _spriteBatch.Draw(pictureTexture, pictureRect, Color.White);
-                rodger.Draw(_spriteBatch);
-                _spriteBatch.Draw(rodBoxTexture, textboxRect, Color.White);
-                _spriteBatch.DrawString(textFont, textbox, new Vector2(10, 360), Color.Black);
-
-                //_spriteBatch.Draw(portraitTexture, portraitRect, Color.White);
+                if (lookPortrait == true)
+                {
+                    _spriteBatch.Draw(portraitTexture, portraitRect, Color.White);
+                }
+                if (lookGlass == true)
+                {
+                    _spriteBatch.Draw(magGlassTexture, magGlassRect, Color.White);
+                }
+                if (isSpeaking == true)
+                {
+                    rodger.Draw(_spriteBatch);
+                    _spriteBatch.Draw(rodBoxTexture, textboxRect, Color.White);
+                    _spriteBatch.DrawString(textFont, textbox, new Vector2(10, 360), Color.Black);
+                }
+                
             }
             else if (screens == Screens.LivingRoom) 
             {
                 //_spriteBatch.Draw(rackTexture, rackRect, Color.White);
                 //_spriteBatch.Draw(rackClothesTexture, rackCRect, Color.White);
             }
-            else if (screens == Screens.Outside)
+            else if (screens == Screens.VeeOffice)
             {
-                _spriteBatch.Draw(outsideBackground, new Rectangle(-5, 0, 810, 505), Color.White);
-
-            }
-            else if (screens == Screens.Kitchen)
-            {
-                _spriteBatch.Draw(kitchenBackground, new Rectangle(-5, 0, 810, 505), Color.White);
-
-            }
-            else if (screens == Screens.Elevator)
-            {
-                _spriteBatch.Draw(elevatorBackground, new Rectangle(-5, 0, 810, 505), Color.White);
-
-            }
-            else
-            {
-
+                vee.Draw(_spriteBatch);
+                _spriteBatch.Draw(veeBoxTexture, textboxRect, Color.White);
+                _spriteBatch.DrawString(textFont, textbox, new Vector2(10, 360), Color.Black);
             }
             _spriteBatch.End();
 
