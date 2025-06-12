@@ -32,6 +32,12 @@ namespace Monogame_Final_Project___Vees_Utopia
             get { return _location; }
 
         }
+
+        public int TextureIndex
+        {
+            get { return _textureIndex; }
+            set { _textureIndex = value; }
+        }
     }
 
     
