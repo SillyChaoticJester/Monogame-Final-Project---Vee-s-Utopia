@@ -52,6 +52,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Texture2D rackTexture;
         Texture2D rackClothesTexture;
         Texture2D rodDeskTexture;
+        Texture2D drawerTexture;
 
         Texture2D rodBoxTexture;
         Texture2D veeBoxTexture;
@@ -76,6 +77,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Rectangle rackRect;
         Rectangle rackCRect;
         Rectangle textboxRect;
+        Rectangle drawerRect, glassDrawerRect;
 
         Rectangle toodlesRect;
         Rectangle tooTalkRect;
@@ -95,9 +97,11 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
         bool isSpeaking = false;
         bool isVSpeaking = false;
+        bool introSequence = false;
         bool isTTalking = false;
         bool lookGlass = false;
         bool lookPortrait = false;
+        bool lookDrawer = false;
         bool haveGlass = false;
 
         string textbox;
@@ -121,7 +125,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            screens = Screens.Lore2;
+            screens = Screens.Office;
             titleRect = new Rectangle(220, 10, 395, 200);
             doorRect = new Rectangle(580, 92, 160, 290);
             magGlassRect = new Rectangle(250, 20, 300, 330);
@@ -131,6 +135,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             rackRect = new Rectangle(474, 138, 100, 268);
             rackCRect = new Rectangle(450, 115, 170, 290);
             textboxRect = new Rectangle(0, 350, 800, 150);
+            drawerRect = new Rectangle(220, 312, 125, 51);
+            glassDrawerRect = new Rectangle(220, 368, 125, 51);
 
             toodlesRect = new Rectangle(250, 200, 100, 200);
             tooTalkRect = new Rectangle(560, 100, 180, 340);
@@ -176,6 +182,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             rackTexture = Content.Load<Texture2D>("Images/rack");
             rackClothesTexture = Content.Load<Texture2D>("Images/rack_clothes");
             rodDeskTexture = Content.Load<Texture2D>("Images/rod_desk");
+            drawerTexture = Content.Load<Texture2D>("Images/drawer");
 
             rodBoxTexture = Content.Load<Texture2D>("Textboxes/rod_textbox");
             veeBoxTexture = Content.Load<Texture2D>("Textboxes/vee_textbox");
@@ -280,6 +287,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 if (Click())
                 {
                     screens = Screens.Office;
+                    introSequence = true;
                     isSpeaking = true;
                     rSprite = 0;
                     textboxCount = 0;
@@ -287,63 +295,99 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             }
             else if (screens == Screens.Office)
             {
-                if (Click() && textboxCount == 0)
+                this.Window.Title = $"Textbox Count = {textboxCount}";
+                if (Click() && introSequence && textboxCount == 0)
                 {
                     textbox = "However, I still have that interview with Vee in a \ncouple of hours...";
                     textboxCount++;
+                    this.Window.Title = $"Textbox Count = {textboxCount}";
+
                 }
-                else if (Click() && textboxCount == 1)
+                else if (Click() && introSequence && textboxCount == 1)
                 {
                     textbox = "I should get myself ready to head towards Vee's \nOffice floor.";
-                    textboxCount++;
+                    textboxCount++; 
+                    this.Window.Title = $"Textbox Count = {textboxCount}";
+
                 }
-                else if (Click() && textboxCount == 2)
+                else if (Click() && introSequence && textboxCount == 2)
                 {
                     textbox = "";
                     isSpeaking = false;
+                    introSequence = false;
                     textboxCount = 0;
                 }
-                if (Click() && pictureRect.Contains(mouseState.Position))
+                else if (Click() && pictureRect.Contains(mouseState.Position) && !introSequence)
                 {
                     isSpeaking = true;
                     lookPortrait = true;
                     rodger.TextureIndex = 2;
                     textbox = "A portrait of my wonderful family. Oh, how much \nToodles has grown since that day...";
-                    
                     textboxCount++;
-                    if (textboxCount == 1)
-                    {
-
-                        isSpeaking = false;
-                        lookPortrait = false;
-                        textboxCount = 0;
-                        rodger.TextureIndex = 0;
-                    }
+                    this.Window.Title = $"Textbox Count = {textboxCount}";
                 }
-                if (Click() && doorRect.Contains(mouseState.Position) && haveGlass == false)
+                else if (Click() && lookPortrait && !introSequence && textboxCount == 1)
                 {
+                    isSpeaking = false;
+                    lookPortrait = false;
+                    textboxCount = 0;
+                    rodger.TextureIndex = 0;
+                }
+                else if (Click() && doorRect.Contains(mouseState.Position) && !introSequence && !haveGlass)
+                {
+                    rodger.TextureIndex = 0;
+
                     isSpeaking = true;
                     textbox = "Hmm, it feels like I'm missing something... \nBetter check again.";
                     textboxCount++;
-                    if (Click() && textboxCount == 1)
-                    {
-                        
-
-                        isSpeaking = false;
-                        textboxCount = 0;
-                    }
+                }
+                else if (Click() && isSpeaking && textboxCount == 1 && !introSequence)
+                {
+                    isSpeaking = false;
+                    textboxCount = 0;
+                }
+                else if (Click() && drawerRect.Contains(mouseState.Position) && !introSequence)
+                {
+                    isSpeaking = true;
+                    lookDrawer = true;
+                    rodger.TextureIndex = 1;
+                    textbox = "It's filled to the brim with various types of \npaperwork. A detective's job is never easy, but I \nalways get it done.";
+                    textboxCount++;
+                }
+                else if (Click() && lookDrawer && textboxCount == 1 && !introSequence)
+                {
+                    isSpeaking = false;
+                    lookDrawer = false;
+                    rodger.TextureIndex = 0;
+                    textboxCount = 0;
+                }
+                else if (Click() && glassDrawerRect.Contains(mouseState.Position) && !haveGlass && !introSequence)
+                {
+                    isSpeaking = true;
+                    lookGlass = true;
+                    rodger.TextureIndex = 2;
+                    textbox = "Ah, there it is! My trusty magnifying glass! Never done a case without it.";
+                    textboxCount++;
+                }
+                else if (Click() && lookGlass && textboxCount == 1)
+                {
+                    isSpeaking = false;
+                    lookGlass = false;
+                    haveGlass = true;
+                    rodger.TextureIndex = 0;
+                    textboxCount = 0;
                 }
                 else if (Click() && doorRect.Contains(mouseState.Position) && haveGlass == true)
                 {
                     isSpeaking = true;
                     textbox = "Looks like I got everything from here.";
                     textboxCount++;
-                    if (Click() && textboxCount == 1)
-                    {
-                        isSpeaking = false;
-                        textboxCount = 0;
-                        screens = Screens.LivingRoom;
-                    }
+                }
+                else if (Click() && !introSequence && haveGlass && textboxCount == 1)
+                {
+                    isSpeaking = false;
+                    textboxCount = 0;
+                    screens = Screens.LivingRoom;
                 }
             }
             else if (screens == Screens.LivingRoom)
@@ -357,6 +401,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     {
                         isSpeaking = true;
                         isTTalking = false;
+                        rodger.TextureIndex = 2;
                         textbox = "Heh, you may never know with how peaceful the streets of Cyberview are nowadays.";
                         textboxCount++;
                     }
@@ -427,6 +472,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 _spriteBatch.Draw(doorTexture, doorRect, Color.White);
                 _spriteBatch.Draw(rodDeskTexture, rodDeskRect, Color.White);
                 _spriteBatch.Draw(pictureTexture, pictureRect, Color.White);
+                _spriteBatch.Draw(drawerTexture, drawerRect, Color.White);
+                _spriteBatch.Draw(drawerTexture, glassDrawerRect, Color.White);
                 if (lookPortrait == true)
                 {
                     _spriteBatch.Draw(portraitTexture, portraitRect, Color.White);
