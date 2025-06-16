@@ -29,12 +29,9 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         private SpriteBatch _spriteBatch;
 
         //List of Things that I need:
-        //Enumerations
         //Die Class for Mini-Game
-        //All the Screens
-        //See if Classes are Needed
-        //Sprites
         //Music and Sounds
+        //Finish cutscenes and make sure the Vee scene is done at least.
 
 
         Texture2D titleTexture;
