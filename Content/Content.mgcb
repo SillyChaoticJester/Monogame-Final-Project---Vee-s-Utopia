@@ -498,6 +498,12 @@
 /processorParam:TextureFormat=Color
 /build:Shrimpo/S_Talk2.png
 
+#begin Sounds-Music/interview.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds-Music/interview.wav
+
 #begin Sounds-Music/vu_title_music.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

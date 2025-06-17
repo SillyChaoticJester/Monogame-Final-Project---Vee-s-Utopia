@@ -84,6 +84,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
         SoundEffect titleMusic;
         SoundEffectInstance titleMusicInstance;
+        SoundEffect interviewMusic;
+        SoundEffectInstance interviewMusicInstance;
 
         Rodger rodger;
         Vee vee;
@@ -123,7 +125,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            screens = Screens.LivingRoom;
+            screens = Screens.VeeOffice;
             titleRect = new Rectangle(220, 10, 395, 200);
             doorRect = new Rectangle(580, 92, 160, 290);
             magGlassRect = new Rectangle(250, 20, 300, 330);
@@ -190,6 +192,10 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             titleMusic = Content.Load<SoundEffect>("Sounds-Music/vu_title_music");
             titleMusicInstance = titleMusic.CreateInstance();
             titleMusicInstance.IsLooped = true;
+
+            interviewMusic = Content.Load<SoundEffect>("Sounds-Music/interview");
+            interviewMusicInstance = interviewMusic.CreateInstance();
+            interviewMusicInstance.IsLooped = true;
 
             //Rodger
             rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Idle"));
@@ -470,7 +476,56 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             }
             else if (screens == Screens.VeeOffice) 
             {
-                textbox = "No clue why the sprites aren't working...";
+                if (Click() && !isSpeaking && textboxCount == 0)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = true;
+                    textbox = "Afternoon, Vee.";
+                    textboxCount++;
+                }
+                else if (Click() && isSpeaking && textboxCount == 1)
+                {
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    vee.TextureIndex = 1;
+                    textbox = "Rodger.";
+                    textboxCount++;
+                }
+                else if (Click() && isVSpeaking && textboxCount == 2)
+                {
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    vee.TextureIndex = 0;
+                    textbox = "You don't seem surprised to see me.";
+                    textboxCount++;
+                }
+                else if (Click() && isSpeaking && textboxCount == 3)
+                {
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    vee.TextureIndex = 1;
+                    textbox = "I'm used to you pursuing knowledge whenever \npossible. I'm guessing that's why you came here.";
+                    textboxCount++;
+                }
+                else if (Click() && isVSpeaking && textboxCount == 4)
+                {
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 5;
+                    textbox = "You know me quite well. Yes, that is exactly why \nI'm here.";
+                    textboxCount++;
+                }
+                else if (Click() && isSpeaking && textboxCount == 5)
+                {
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    vee.TextureIndex = 1;
+                    rodger.TextureIndex = 4;
+                    textbox = "Very well, ask away. Just know the boundaries \nyou're stepping in.";
+                    textboxCount++;
+                }
             }
 
             base.Update(gameTime);
@@ -562,8 +617,17 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             {
                 _spriteBatch.Draw(veeOfficeBackground, new Rectangle(-5, 0, 810, 505), Color.White);
                 vee.Draw(_spriteBatch);
-                _spriteBatch.Draw(veeBoxTexture, textboxRect, Color.White);
-                _spriteBatch.DrawString(textFont, textbox, new Vector2(10, 360), Color.Black);
+                if (isVSpeaking)
+                {
+                    _spriteBatch.Draw(veeBoxTexture, textboxRect, Color.White);
+                    _spriteBatch.DrawString(textFont, textbox, new Vector2(10, 360), Color.Black);
+                }
+                if (isSpeaking == true)
+                {
+                    rodger.Draw(_spriteBatch);
+                    _spriteBatch.Draw(rodBoxTexture, textboxRect, Color.White);
+                    _spriteBatch.DrawString(textFont, textbox, new Vector2(10, 360), Color.Black);
+                }
             }
             _spriteBatch.End();
 
