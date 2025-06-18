@@ -21,7 +21,8 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Elevator,
         Reception,
         VeeOffice,
-        CrimeScene
+        CrimeScene,
+        End
     }
     public class Game1 : Game
     {
@@ -56,6 +57,12 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Texture2D dazBoxTexture;
         Texture2D tooBoxTexture;
 
+        Texture2D questionOneTexture;
+        Texture2D questionTwoTexture;
+        Texture2D questionThreeTexture;
+        Texture2D questionFourTexture;
+        Texture2D questionFiveTexture;
+
         List<Texture2D> rodgerTextures;
         List<Texture2D> veeTextures;
         List<Texture2D> boxtenTextures;
@@ -79,6 +86,12 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         Rectangle toodlesRect;
         Rectangle tooTalkRect;
 
+        Rectangle questionOneRect;
+        Rectangle questionTwoRect;
+        Rectangle questionThreeRect;
+        Rectangle questionFourRect;
+        Rectangle questionFiveRect;
+
         SpriteFont textFont;
         SpriteFont bigTextFont;
 
@@ -97,12 +110,25 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         bool isSpeaking = false;
         bool isVSpeaking = false;
         bool introSequence = false;
+        bool officeIntro = true;
         bool isTTalking = false;
         bool lookGlass = false;
         bool lookPortrait = false;
         bool lookDrawer = false;
         bool haveGlass = false;
         bool haveClothes = false;
+
+        bool showQOne = false;
+        bool showQTwo = false;
+        bool showQThree = false;
+        bool showQFour = false;
+        bool showQFive = false;
+
+        bool askQOne = false;
+        bool askQTwo = false;
+        bool askQThree = false;
+        bool askQFour = false;
+        bool askQFive = false;
 
         string textbox;
 
@@ -140,6 +166,12 @@ namespace Monogame_Final_Project___Vee_s_Utopia
 
             toodlesRect = new Rectangle(250, 200, 100, 200);
             tooTalkRect = new Rectangle(560, 100, 180, 340);
+
+            questionOneRect = new Rectangle(150, 375, 150, 100);
+            questionTwoRect = new Rectangle(150, 375, 150, 100);
+            questionThreeRect = new Rectangle(325, 375, 150, 100);
+            questionFourRect = new Rectangle(500, 375, 150, 100);
+            questionFiveRect = new Rectangle(325, 375, 150, 100);
 
             rodgerTextures = new List<Texture2D>();
             veeTextures = new List<Texture2D>();
@@ -188,6 +220,12 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             veeBoxTexture = Content.Load<Texture2D>("Textboxes/vee_textbox");
             dazBoxTexture = Content.Load<Texture2D>("Textboxes/daz_textbox");
             tooBoxTexture = Content.Load<Texture2D>("Textboxes/too_textbox");
+
+            questionOneTexture = Content.Load<Texture2D>("Textboxes/question1");
+            questionTwoTexture = Content.Load<Texture2D>("Textboxes/question2");
+            questionThreeTexture = Content.Load<Texture2D>("Textboxes/question3");
+            questionFourTexture = Content.Load<Texture2D>("Textboxes/question4");
+            questionFiveTexture = Content.Load<Texture2D>("Textboxes/question5");
 
             titleMusic = Content.Load<SoundEffect>("Sounds-Music/vu_title_music");
             titleMusicInstance = titleMusic.CreateInstance();
@@ -470,13 +508,14 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 else if (Click() && haveClothes && textboxCount == 5)
                 {
                     isSpeaking = false;
+                    officeIntro = true;
                     textboxCount = 0;
                     screens = Screens.VeeOffice;
                 }
             }
             else if (screens == Screens.VeeOffice) 
             {
-                if (Click() && !isSpeaking && textboxCount == 0)
+                if (Click() && officeIntro && !isSpeaking && textboxCount == 0)
                 {
                     vee.TextureIndex = 0;
                     rodger.TextureIndex = 4;
@@ -484,7 +523,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     textbox = "Afternoon, Vee.";
                     textboxCount++;
                 }
-                else if (Click() && isSpeaking && textboxCount == 1)
+                else if (Click() && officeIntro && textboxCount == 1)
                 {
                     isSpeaking = false;
                     isVSpeaking = true;
@@ -492,7 +531,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     textbox = "Rodger.";
                     textboxCount++;
                 }
-                else if (Click() && isVSpeaking && textboxCount == 2)
+                else if (Click() && officeIntro && textboxCount == 2)
                 {
                     isSpeaking = true;
                     isVSpeaking = false;
@@ -500,7 +539,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     textbox = "You don't seem surprised to see me.";
                     textboxCount++;
                 }
-                else if (Click() && isSpeaking && textboxCount == 3)
+                else if (Click() && officeIntro && textboxCount == 3)
                 {
                     isSpeaking = false;
                     isVSpeaking = true;
@@ -508,7 +547,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     textbox = "I'm used to you pursuing knowledge whenever \npossible. I'm guessing that's why you came here.";
                     textboxCount++;
                 }
-                else if (Click() && isVSpeaking && textboxCount == 4)
+                else if (Click() && officeIntro && textboxCount == 4)
                 {
                     isSpeaking = true;
                     isVSpeaking = false;
@@ -517,7 +556,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     textbox = "You know me quite well. Yes, that is exactly why \nI'm here.";
                     textboxCount++;
                 }
-                else if (Click() && isSpeaking && textboxCount == 5)
+                else if (Click() && officeIntro && textboxCount == 5)
                 {
                     isSpeaking = false;
                     isVSpeaking = true;
@@ -525,6 +564,69 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     rodger.TextureIndex = 4;
                     textbox = "Very well, ask away. Just know the boundaries \nyou're stepping in.";
                     textboxCount++;
+                }
+                else if (Click() && officeIntro && textboxCount == 6)
+                {
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    officeIntro = false;
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 4;
+                    textbox = "";
+                    textboxCount = 0;
+                    showQOne = true;
+                    showQThree = true;
+                    showQFour = true;
+                    interviewMusicInstance.Play();
+                }
+                else if (Click() && questionOneRect.Contains(mouseState.Position))
+                {
+                    vee.TextureIndex = 1;
+                    isSpeaking = false;
+                    isVSpeaking= true;
+                    askQOne = true;
+                    showQOne = false;
+                    showQThree = false;
+                    showQFour = false;
+                    textbox = "You ask as if you have amnesia. Do we need to get \nthat head of yours checked up on?";
+                    textboxCount++;
+                }
+                else if (Click() && askQOne && textboxCount == 1)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 5;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "No, no, my memory is perfectly fine. I'm just asking \nthis from a reporter standpoint so any newer Toons \ncan refer to a booklet for info they should know.";
+                    textboxCount++;
+                }
+                else if (Click() && askQOne && textboxCount == 2)
+                {
+                    vee.TextureIndex = 1;
+                    rodger.TextureIndex = 5;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "Right, right, of course. Can't forget that newer \n Toons might not know everything.";
+                    textboxCount++;
+                }
+                else if (Click() && askQOne && textboxCount == 3)
+                {
+                    vee.TextureIndex = 2;
+                    textbox = "Well, you know me already, I am Vee. Vee Version 1.0, to be precise. And I run the entirety of Cyberview as the Main Star.";
+                    textboxCount++;
+                }
+                else if (Click() && askQOne && textboxCount == 4)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 3;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    askQOne = false;
+                    showQTwo = true;
+                    showQThree = false;
+                    showQFour = false;
+                    textbox = "";
+                    textboxCount = 0;
                 }
             }
 
@@ -628,6 +730,27 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     _spriteBatch.Draw(rodBoxTexture, textboxRect, Color.White);
                     _spriteBatch.DrawString(textFont, textbox, new Vector2(10, 360), Color.Black);
                 }
+                if (showQOne)
+                {
+                    _spriteBatch.Draw(questionOneTexture, questionOneRect, Color.White);
+                }
+                if (showQTwo)
+                {
+                    _spriteBatch.Draw(questionTwoTexture, questionTwoRect, Color.White);
+                }
+                if (showQThree)
+                {
+                    _spriteBatch.Draw(questionThreeTexture, questionThreeRect, Color.White);
+                }
+                if (showQFour)
+                {
+                    _spriteBatch.Draw(questionFourTexture, questionFourRect, Color.White);
+                }
+                if (showQFive)
+                {
+                    _spriteBatch.Draw(questionFiveTexture, questionFiveRect, Color.White);
+                }
+  
             }
             _spriteBatch.End();
 
