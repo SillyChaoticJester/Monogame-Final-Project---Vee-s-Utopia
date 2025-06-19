@@ -504,6 +504,12 @@
 /processorParam:Quality=Best
 /build:Sounds-Music/interview.wav
 
+#begin Sounds-Music/vee_mad.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds-Music/vee_mad.wav
+
 #begin Sounds-Music/vu_title_music.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -100,6 +100,9 @@ namespace Monogame_Final_Project___Vee_s_Utopia
         SoundEffect interviewMusic;
         SoundEffectInstance interviewMusicInstance;
 
+        SoundEffect veeMad;
+        SoundEffectInstance veeMadInstance;
+
         Rodger rodger;
         Vee vee;
 
@@ -235,26 +238,29 @@ namespace Monogame_Final_Project___Vee_s_Utopia
             interviewMusicInstance = interviewMusic.CreateInstance();
             interviewMusicInstance.IsLooped = true;
 
+            veeMad = Content.Load<SoundEffect>("Sounds-Music/vee_mad");
+            veeMadInstance = veeMad.CreateInstance();
+
             //Rodger
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Idle"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk2"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Idle"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk2"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk3"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Shook"));
-            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Think"));
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Idle")); //0
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk")); //1
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Casual_Talk2")); //2
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Idle")); //3
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk")); //4
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk2")); //5
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Talk3")); //6
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Shook")); //7
+            rodgerTextures.Add(Content.Load<Texture2D>("Rodger/R_Think")); //8
             
             //Vee
-            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Idle"));
-            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Talk"));
-            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Talk2"));
-            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Weary"));
-            veeTextures.Add(Content.Load<Texture2D>("Vee/V_WearyTalk"));
-            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Mad"));
-            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Annoyed"));
-            veeTextures.Add(Content.Load<Texture2D>("Vee/V_AnnoyedTalk"));
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Idle")); //0
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Talk")); //1
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Talk2")); //2
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Weary")); //3
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_WearyTalk")); //4
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Mad")); //5
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_Annoyed")); //6
+            veeTextures.Add(Content.Load<Texture2D>("Vee/V_AnnoyedTalk")); //7
 
             //Boxten
             boxtenTextures.Add(Content.Load<Texture2D>("Boxten/B_Idle"));
@@ -597,7 +603,7 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     rodger.TextureIndex = 5;
                     isSpeaking = true;
                     isVSpeaking = false;
-                    textbox = "No, no, my memory is perfectly fine. I'm just asking \nthis from a reporter standpoint so any newer Toons \ncan refer to a booklet for info they should know.";
+                    textbox = "No, no, my memory is perfectly fine. I'm just asking \nthis from a reporter standpoint so any newer Toons \ncan refer to a booklet for info about you.";
                     textboxCount++;
                 }
                 else if (Click() && askQOne && textboxCount == 2)
@@ -606,27 +612,318 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                     rodger.TextureIndex = 5;
                     isSpeaking = false;
                     isVSpeaking = true;
-                    textbox = "Right, right, of course. Can't forget that newer \n Toons might not know everything.";
+                    textbox = "Right, right, of course. Can't forget that newer \nToons might not know everything.";
                     textboxCount++;
                 }
                 else if (Click() && askQOne && textboxCount == 3)
                 {
                     vee.TextureIndex = 2;
-                    textbox = "Well, you know me already, I am Vee. Vee Version 1.0, to be precise. And I run the entirety of Cyberview as the Main Star.";
+                    textbox = "Well, you know me already, I am Vee. Vee Version \n1.0, to be precise. And I run the entirety of \nCyberview as the Main Star.";
                     textboxCount++;
                 }
                 else if (Click() && askQOne && textboxCount == 4)
                 {
                     vee.TextureIndex = 0;
                     rodger.TextureIndex = 3;
+                    questionOneRect.Y = 900;
                     isSpeaking = true;
                     isVSpeaking = false;
                     askQOne = false;
                     showQTwo = true;
-                    showQThree = false;
-                    showQFour = false;
+                    showQThree = true;
+                    showQFour = true;
                     textbox = "";
                     textboxCount = 0;
+                }
+                else if (Click() && questionTwoRect.Contains(mouseState.Position))
+                {
+                    vee.TextureIndex = 1;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    askQTwo = true;
+                    showQTwo = false;
+                    showQThree = false;
+                    showQFour = false;
+                    textbox = "Uh, yes? What about it?";
+                    textboxCount++;
+                }
+                else if (Click() && askQTwo && textboxCount == 1)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 5;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "Well, that just implies that there was no need for \nanother version of you, correct?";
+                    textboxCount++;
+                }
+                else if (Click() && askQTwo && textboxCount == 2)
+                {
+                    vee.TextureIndex = 4;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "Yes... That's exactly the reason why...";
+                    textboxCount++;
+                }
+                else if (Click() && askQTwo && textboxCount == 3)
+                {
+                    vee.TextureIndex = 3;
+                    rodger.TextureIndex = 6;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "... (I think I hit a nerve there. I should be more \ncareful with what I say.)";
+                    textboxCount++;
+                }
+                else if (Click() && askQTwo && textboxCount == 4)
+                {
+                    vee.TextureIndex = 3;
+                    rodger.TextureIndex = 6;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "Deepest apologies.";
+                    textboxCount++;
+                }
+                else if (Click() && askQTwo && textboxCount == 5)
+                {
+                    vee.TextureIndex = 4;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "It's fine, just keep asking.";
+                    textboxCount++;
+                }
+                else if (Click() && askQTwo && textboxCount == 6)
+                {
+                    vee.TextureIndex = 3;
+                    rodger.TextureIndex = 3;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    askQTwo = false;
+                    showQThree = true;
+                    showQFour = true;
+                    textbox = "";
+                    textboxCount = 0;
+                }
+                else if (Click() && questionThreeRect.Contains(mouseState.Position))
+                {
+                    vee.TextureIndex = 1;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    askQThree = true;
+                    showQThree = false;
+                    showQFour = false;
+                    textbox = "Honestly, it feels nice getting the spotlight to \nyourself for once.";
+                    textboxCount++;
+                }
+                else if (Click() && askQThree && textboxCount == 1)
+                {
+                    vee.TextureIndex = 2;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "But of course, that doesn't mean that the other \nMain Toons aren't important. I still enjoy having my \nfriends' company from time to time.";
+                    textboxCount++;
+                }
+                else if (Click() && askQThree && textboxCount == 2)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "And what about taking care of an entire facility full \nof Toons and Machine Toons?";
+                    textboxCount++;
+                }
+                else if (Click() && askQThree && textboxCount == 3)
+                {
+                    vee.TextureIndex = 1;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "The work can be tiring, but it's necessary to keep \neveryone safe and sound. I wouldn't want anyone \nhere getting hurt.";
+                    textboxCount++;
+                }
+                else if (Click() && askQThree && textboxCount == 4)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "Of course.";
+                    textboxCount++;
+                }
+                else if (Click() && askQThree && textboxCount == 5)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 3;
+                    questionThreeRect.Y = 900;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    askQThree = false;
+                    showQFour = true;
+                    textbox = "";
+                    textboxCount = 0;
+                }
+                else if (Click() && questionFourRect.Contains(mouseState.Position))
+                {
+                    vee.TextureIndex = 7;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    askQFour = true;
+                    showQFour = false;
+                    textbox = "Eugh, that weed... Yes, I am aware that Dandicus' \nimprisonment might be considered dangerous, but I \nwill make sure that he stays there.";
+                    textboxCount++;
+                }
+                else if (Click() && askQFour && textboxCount == 1)
+                {
+                    vee.TextureIndex = 1;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "What he did to us was against all of Toon-kind, so \nhe'll be kept a close eye on.";
+                    textboxCount++;
+                }
+                else if (Click() && askQFour && textboxCount == 2)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "I've heard he's gotten extremely rageful, and it only \nseems to be growing. What if he turns Twisted and \nescapes?";
+                    textboxCount++;
+                }
+                else if (Click() && askQFour && textboxCount == 3)
+                {
+                    vee.TextureIndex = 1;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "Again, even if that were the case, he's not escaping. \nI will make sure of it, for everyone.";
+                    textboxCount++;
+                }
+                else if (Click() && askQFour && textboxCount == 4)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 3;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    askQFour = false;
+                    showQFive = true;
+                    textbox = "";
+                    textboxCount = 0;
+                }
+                else if (Click() && questionFiveRect.Contains(mouseState.Position))
+                {
+                    vee.TextureIndex = 1;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    askQFive = true;
+                    showQFive = false;
+                    textbox = "Excuse me?";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 1)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "Well, you said how much you care about the other \nMain Toons, but what about Astro? He's been \nmissing for months now.";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 2)
+                {
+                    vee.TextureIndex = 1;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "Rodger, I told you not to bring this up again...";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 3)
+                {
+                    vee.TextureIndex = 0;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "Yet I feel as if there's more to this than you're \nwilling to talk about. Are you really willing to just \ndrop his search mission so quickly?";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 4)
+                {
+                    vee.TextureIndex = 7;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "Rodger...";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 5)
+                {
+                    vee.TextureIndex = 6;
+                    rodger.TextureIndex = 8;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "Not to mention, I don't hear \nanything about him anymore. It's just like he's been \nerased off the face of the Earth-";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 6)
+                {
+                    interviewMusicInstance.Stop();
+                    veeMadInstance.Play();
+                    vee.TextureIndex = 5;
+                    rodger.TextureIndex = 4;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "RODGER!";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 7)
+                {
+                    rodger.TextureIndex = 7;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "!!!";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 8)
+                {
+                    vee.TextureIndex = 6;
+                    isSpeaking = false;
+                    isVSpeaking = true;
+                    textbox = "...";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 9)
+                {
+                    vee.TextureIndex = 7;
+                    textbox = "Look, I understand you're extremely focused on \ntrying to figure out where Astro went, and I deeply \nunderstand your concerns...";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 10)
+                {
+                    vee.TextureIndex = 7;
+                    textbox = "...but you have to understand that I am just as \nworried as you are about it.";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 11)
+                {
+                    vee.TextureIndex = 4;
+                    textbox = "I just can't handle the stress of having to worry \nabout him every day, but that doesn't mean I'm not \nsearching for him.";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 12)
+                {
+                    vee.TextureIndex = 7;
+                    textbox = "I think our time here is over.";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 13)
+                {
+                    vee.TextureIndex = 6;
+                    rodger.TextureIndex = 6;
+                    isSpeaking = true;
+                    isVSpeaking = false;
+                    textbox = "...Understood";
+                    textboxCount++;
+                }
+                else if (Click() && askQFive && textboxCount == 14)
+                {
+                    screens = Screens.End;
                 }
             }
 
@@ -742,14 +1039,15 @@ namespace Monogame_Final_Project___Vee_s_Utopia
                 {
                     _spriteBatch.Draw(questionThreeTexture, questionThreeRect, Color.White);
                 }
-                if (showQFour)
-                {
-                    _spriteBatch.Draw(questionFourTexture, questionFourRect, Color.White);
-                }
                 if (showQFive)
                 {
                     _spriteBatch.Draw(questionFiveTexture, questionFiveRect, Color.White);
                 }
+                if (showQFour)
+                {
+                    _spriteBatch.Draw(questionFourTexture, questionFourRect, Color.White);
+                }
+                
   
             }
             _spriteBatch.End();
